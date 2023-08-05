@@ -1,7 +1,7 @@
+settings.py
 NOTAS.md
 snippets.py
 config.md
-settings.py
 
 *.swp
 package-lock.json

@@ -4,19 +4,6 @@ from settings import NEWS_API_KEY
 # Todo: Set logging
 
 
-def get_news(on, type_='topic', raw=False):
-    """
-    Get news by topic or tickers
-    """
-    if type_=='topic':
-        news = get_news_by_topic(on)
-    elif type_=='ticker':
-        tickers = on.split(',')
-        news = get_news_by_ticker(tickers)
-    if raw:
-        return news
-    return print_better(news)
-
 def get_news_by_topic(topic='technology'):
     """
     TOPICS_AVAILABLE = blockchain, earnings, ipo, mergers_and_acquisitions, financial_markets,
@@ -28,7 +15,7 @@ def get_news_by_topic(topic='technology'):
     """
     url = 'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&'
     url += 'topics={}&'.format(topic)
-    url += 'apikey={}'.format(API_KEY)
+    url += 'apikey={}'.format(NEWS_API_KEY)
     print(url)
     response = requests.get(url)
     if response.ok:
@@ -75,4 +62,10 @@ def prepare_for_markdown(news_list):
     for new in news_list:
         news += f"[{new.get('title')}]({new.get('url')})"
         news += "\n\n"
+    return news
+
+def prepare_for_single_items(news_list):
+    news = []
+    for new in news_list:
+        news.append(f"[{new.get('title')}]({new.get('url')})")
     return news
